@@ -118,7 +118,22 @@ const updateHouse = async (req, res) => {
   }
 };
 
+const deleteHouse = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const query = { _id: new mongoose.Types.ObjectId(id) };
+    const deleteHouse = await House.deleteOne(query);
+
+    res.status(200).json({ status: "Success", deleteHouse });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: "Failed", error });
+  }
+};
+
 module.exports = {
   addHouse,
-  updateHouse
+  updateHouse,
+  deleteHouse
 };

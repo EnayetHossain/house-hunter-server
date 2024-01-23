@@ -1,9 +1,13 @@
 const express = require("express");
-const { addHouse, updateHouse } = require("../controllers/house.controller");
+const {
+  addHouse,
+  updateHouse,
+  deleteHouse
+} = require("../controllers/house.controller");
 
 const router = express.Router();
 
-router.route("/add-house").post(addHouse);
-router.route("/update-house/:id").patch(updateHouse);
+router.route("/").post(addHouse);
+router.route("/:id").patch(updateHouse).delete(deleteHouse);
 
 module.exports = router;
