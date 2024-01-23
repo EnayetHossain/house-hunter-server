@@ -1,5 +1,38 @@
 const mongoose = require("mongoose");
 
+//sub document schema for the renter
+const RenterSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "Renter's name is required"]
+  },
+
+  email: {
+    type: String,
+    required: [true, "Renter's email is required"],
+    match: [
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please provide a valid email"
+    ]
+  },
+
+  phoneNumber: {
+    type: String,
+    required: [true, "Phone number must be provided"],
+    validate: {
+      validator: function (value) {
+        // Define a simplified regex pattern for Bangladeshi phone numbers
+        const bangladeshiPhoneNumberRegex = /^\+8801\d{9}$/;
+
+        // Test the value against the regex pattern
+        return bangladeshiPhoneNumberRegex.test(value);
+      },
+      message: "Please provide a valid Bangladeshi phone number"
+    }
+  }
+});
+
+// house schema
 const houseSchema = new mongoose.Schema(
   {
     name: {
@@ -79,11 +112,7 @@ const houseSchema = new mongoose.Schema(
       ref: "User"
     },
 
-    renter: {
-      required: false,
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
+    renter: RenterSchema
   },
   { timestamps: true }
 );
