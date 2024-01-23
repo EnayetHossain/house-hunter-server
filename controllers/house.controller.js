@@ -2,6 +2,17 @@ const { default: mongoose } = require("mongoose");
 const CustomError = require("../errors/customError.error");
 const House = require("../models/house.model");
 
+const getAllHouses = async (req, res) => {
+  try {
+    const result = await House.find({});
+    res.status(200).json({ status: "Success", result });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: "Failed", error });
+  }
+};
+
+// add a house in database
 const addHouse = async (req, res) => {
   const {
     name,
@@ -118,6 +129,7 @@ const updateHouse = async (req, res) => {
   }
 };
 
+// delete a house from database
 const deleteHouse = async (req, res) => {
   const id = req.params.id;
 
@@ -133,6 +145,7 @@ const deleteHouse = async (req, res) => {
 };
 
 module.exports = {
+  getAllHouses,
   addHouse,
   updateHouse,
   deleteHouse

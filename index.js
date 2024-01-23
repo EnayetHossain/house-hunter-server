@@ -18,7 +18,7 @@ app.use(cors());
 
 // routes
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/house", houseRouter);
+app.use("/api/v1/houses", houseRouter);
 
 // routes
 app.get("/", (req, res) => {
