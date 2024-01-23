@@ -13,6 +13,13 @@ const UserSchema = new mongoose.Schema(
       enum: ["owner", "renter"]
     },
 
+    houseBooked: {
+      type: Number,
+      required: [true, "Number of house booked is required"],
+      default: 0,
+      max: [2, "Maximum value for houseBooked is 2"]
+    },
+
     phoneNumber: {
       type: String,
       required: [true, "Phone number must be provided"],

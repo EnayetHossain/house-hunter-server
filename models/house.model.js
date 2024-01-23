@@ -67,7 +67,20 @@ const houseSchema = new mongoose.Schema(
       required: [true, "Description is required"]
     },
 
+    status: {
+      type: Boolean,
+      required: [true, "Status is required"],
+      default: false
+    },
+
     owner: {
+      required: [true, "owner is required"],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+
+    renter: {
+      required: false,
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     }
