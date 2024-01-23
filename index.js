@@ -6,6 +6,7 @@ const authRouter = require("./routes/auth.route");
 const errorHandler = require("./middlewares/errorHandler.middleware");
 const notFound = require("./middlewares/notFound.middleware");
 const connectDB = require("./db/connect.db");
+const houseRouter = require("./routes/house.route");
 
 const app = express();
 // eslint-disable-next-line no-unused-vars
@@ -17,6 +18,7 @@ app.use(cors());
 
 // routes
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/house", houseRouter);
 
 // routes
 app.get("/", (req, res) => {
