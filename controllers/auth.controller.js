@@ -3,7 +3,6 @@ const User = require("../models/user.model.js");
 const CustomError = require("../errors/customError.error.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
 
 // login user
 const signIn = async (req, res) => {
@@ -81,57 +80,7 @@ const signUp = async (req, res) => {
   }
 };
 
-// change the password
-const changePassword = async (req, res) => {
-  const { oldPassword, newPassword, confirmNewPassword } = req.body;
-  const id = req.decoded._id;
-
-  const user = await User.findById(id);
-
-  if (!user) throw new CustomError("User doesn't exists", 403);
-
-  // match the user provided password with password in database
-  const isMatch = await bcrypt.compare(oldPassword, user.password);
-  // throw error if password doesn't match
-  if (!isMatch) throw new CustomError("incorrect password", 403);
-
-  if (newPassword !== confirmNewPassword)
-    throw new CustomError(
-      "New password and confirm new password doesn't match",
-      403
-    );
-
-  try {
-    // generate salt for new password
-    const salt = await bcrypt.genSalt(12);
-    // hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-    // find user by user's id
-    const filter = { _id: new mongoose.Types.ObjectId(id) };
-    // filed to be updated
-    const updateDoc = { password: hashedPassword };
-    // update the field
-    const doc = await User.findOneAndUpdate(filter, updateDoc, {
-      new: true
-    }).select("-password");
-
-    if (!doc) {
-      return res
-        .status(404)
-        .json({ status: "Failed", error: "User not found" });
-    }
-
-    res
-      .status(200)
-      .json({ status: "success", message: "Password changed", doc });
-  } catch (error) {
-    console.error(error); // Log the error to the console for debugging
-    res.status(400).json({ status: "Failed", error: error.message });
-  }
-};
-
 module.exports = {
   signIn,
-  signUp,
-  changePassword
+  signUp
 };

@@ -10,7 +10,10 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       required: [true, "Role must be provided"],
-      enum: ["owner", "renter"]
+      enum: {
+        values: ["owner", "renter"],
+        message: "{VALUE} is not valid"
+      }
     },
 
     houseBooked: {

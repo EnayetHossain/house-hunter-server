@@ -100,7 +100,7 @@ const houseSchema = new mongoose.Schema(
       required: [true, "Description is required"]
     },
 
-    status: {
+    isBooked: {
       type: Boolean,
       required: [true, "Status is required"],
       default: false
