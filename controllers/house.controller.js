@@ -54,10 +54,6 @@ const addHouse = async (req, res) => {
     console.log(error);
     res.status(400).json({ status: "Failed", error });
   }
-
-  console.log(req.body);
-
-  res.status(200).json({ message: "received" });
 };
 
 module.exports = {
