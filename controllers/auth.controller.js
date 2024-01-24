@@ -24,11 +24,15 @@ const signIn = async (req, res) => {
         .json({ status: "Failed", error: "Email or password is not correct" });
 
     // generate token
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: process.env.TOKEN_EXPIRES_IN
-    });
+    const token = jwt.sign(
+      { _id: user._id, email: user.email },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: process.env.TOKEN_EXPIRES_IN
+      }
+    );
 
-    res.status(200).json({ status: "Success", token });
+    res.status(200).json({ status: "Success", token, user });
   } catch (error) {
     res.status(400).json({ status: "Failed", error });
   }
@@ -69,11 +73,15 @@ const signUp = async (req, res) => {
       password: hashedPassword
     });
     // generate token
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: process.env.TOKEN_EXPIRES_IN
-    });
+    const token = jwt.sign(
+      { _id: user._id, email: user.email },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: process.env.TOKEN_EXPIRES_IN
+      }
+    );
 
-    res.status(201).json({ status: "Success", token });
+    res.status(201).json({ status: "Success", token, user });
   } catch (error) {
     console.log(error);
     res.status(400).json({ status: "Failed", error });

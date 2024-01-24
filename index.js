@@ -9,7 +9,6 @@ const connectDB = require("./db/connect.db");
 const houseRouter = require("./routes/house.route");
 
 const app = express();
-// eslint-disable-next-line no-unused-vars
 const port = process.env.PORT || 5000;
 
 // middlewares
